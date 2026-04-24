@@ -22,7 +22,7 @@ export function Layout({ children }: LayoutProps) {
       <div className="flex">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         
-        <main className="flex-1 min-h-[calc(100vh-56px)] lg:ml-[280px]">
+        <main className="flex-1 min-h-[calc(100vh-56px)] sm:min-h-[calc(100vh-64px)] lg:ml-[280px] xl:ml-[320px]">
           <div className="bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)] h-1" />
           
           {children || <ApiDetail />}

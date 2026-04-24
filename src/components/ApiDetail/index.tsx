@@ -672,60 +672,62 @@ export function ApiDetail() {
   const apiDescription = selectedEndpoint.description || fullPath;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-colors duration-500 pt-14">
-      <div className="mx-auto px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-8 animate-fadeIn">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-colors duration-500 pt-14 sm:pt-16">
+      <div className="mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-6 sm:py-8 animate-fadeIn">
         <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-8 animate-slideUp">
-          <div className="bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-700/50 dark:via-slate-800 dark:to-slate-700/50 px-6 sm:px-10 lg:px-14 py-6 sm:py-8">
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+          <div className="bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-700/50 dark:via-slate-800 dark:to-slate-700/50 px-4 sm:px-6 lg:px-10 xl:px-14 py-5 sm:py-6 lg:py-8">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
               <div className="flex-1">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${colors.badge} flex items-center justify-center shadow-lg animate-pulse-once`}>
-                    <Zap className="w-6 h-6 sm:w-7 sm:h-7" />
-                  </div>
-                  <div>
-                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 dark:text-slate-100 animate-fadeInUp">{apiTitle}</h1>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className={`text-sm font-semibold ${colors.textColor}`}>{selectedEndpoint.method}</span>
-                      <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                      <span className="text-sm text-slate-500 dark:text-slate-400">{selectedEndpoint.path}</span>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl sm:rounded-2xl ${colors.badge} flex items-center justify-center shadow-lg animate-pulse-once`}>
+                      <Zap className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                     </div>
+                    <div>
+                      <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-slate-900 dark:text-slate-100 animate-fadeInUp">{apiTitle}</h1>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`text-xs-dynamic sm:text-sm font-semibold ${colors.textColor}`}>{selectedEndpoint.method}</span>
+                        <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 dark:text-slate-500" />
+                        <span className="text-xs-dynamic sm:text-sm text-slate-500 dark:text-slate-400 truncate">{selectedEndpoint.path}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleFavorite}
+                      className={`p-2 sm:p-2.5 rounded-full transition-all duration-200 ${
+                        isFavorite(selectedEndpoint.id) 
+                          ? FAVORITE_COLORS[selectedEndpoint.method]?.bgFilled || 'bg-amber-50 dark:bg-amber-900/30' 
+                          : FAVORITE_COLORS[selectedEndpoint.method]?.bgUnfilled || 'hover:bg-slate-200 dark:hover:bg-slate-700'
+                      } group`}
+                      title={isFavorite(selectedEndpoint.id) ? '取消收藏' : '添加收藏'}
+                    >
+                      <Heart className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-200 ${
+                        isFavorite(selectedEndpoint.id) 
+                          ? `${FAVORITE_COLORS[selectedEndpoint.method]?.filled || 'text-amber-500 fill-amber-500'} scale-110 group-hover:animate-heartbeat` 
+                          : FAVORITE_COLORS[selectedEndpoint.method]?.unfilled || 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 group-hover:animate-heartbeat-unfilled'
+                      }`} />
+                    </button>
                   </div>
                 </div>
                 
-                <div className="flex flex-wrap items-center gap-2.5 mb-4">
+                <div className="flex flex-wrap items-center gap-2 mt-3 sm:mt-4">
                   {selectedEndpoint.tags?.map((tag) => (
                     <span 
                       key={tag}
-                      className={`inline-flex items-center text-sm px-3.5 py-1.5 rounded-full ${colors.light} ${colors.textColor} font-medium border border-slate-200 dark:border-slate-600 shadow-sm`}
+                      className={`inline-flex items-center text-xs-dynamic sm:text-sm px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full ${colors.light} ${colors.textColor} font-medium border border-slate-200 dark:border-slate-600 shadow-sm`}
                     >
-                      <Tag className="w-3.5 h-3.5 mr-1.5" />
+                      <Tag className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1 sm:mr-1.5" />
                       {tag}
                     </span>
                   ))}
                 </div>
                 
-                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                  <FolderOpen className="w-5 h-5" />
-                  <span className="text-sm-dynamic">{fullPath}</span>
+                <div className="flex items-center gap-2 mt-3 text-slate-500 dark:text-slate-400">
+                  <FolderOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="text-xs-dynamic sm:text-sm-dynamic truncate">{fullPath}</span>
                 </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={handleFavorite}
-                  className={`p-2.5 sm:p-3 rounded-full transition-all duration-200 ${
-                    isFavorite(selectedEndpoint.id) 
-                      ? FAVORITE_COLORS[selectedEndpoint.method]?.bgFilled || 'bg-amber-50 dark:bg-amber-900/30' 
-                      : FAVORITE_COLORS[selectedEndpoint.method]?.bgUnfilled || 'hover:bg-slate-200 dark:hover:bg-slate-700'
-                  } group`}
-                  title={isFavorite(selectedEndpoint.id) ? '取消收藏' : '添加收藏'}
-                >
-                  <Heart className={`w-5 h-5 sm:w-6 sm:h-6 transition-all duration-200 ${
-                    isFavorite(selectedEndpoint.id) 
-                      ? `${FAVORITE_COLORS[selectedEndpoint.method]?.filled || 'text-amber-500 fill-amber-500'} scale-110 group-hover:animate-heartbeat` 
-                      : FAVORITE_COLORS[selectedEndpoint.method]?.unfilled || 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 group-hover:animate-heartbeat-unfilled'
-                  }`} />
-                </button>
               </div>
             </div>
             
@@ -774,26 +776,26 @@ export function ApiDetail() {
             />
           </div>
 
-          <div className="px-6 sm:px-10 pb-8">
+          <div className="px-4 sm:px-6 lg:px-10 pb-6 lg:pb-8">
             {activeTab === 'parameters' && (
-              <div className="space-y-5 mt-3">
+              <div className="space-y-4 sm:space-y-5 mt-3">
                 {queryParams.length > 0 && (
-                  <div className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-700/50 dark:to-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-600">
-                    <div className="flex items-center gap-4 mb-5">
-                      <div className={`w-12 h-12 rounded-2xl ${colors.light} flex items-center justify-center`}>
-                        <BookOpen className={`w-6 h-6 ${colors.textColor}`} />
+                  <div className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-700/50 dark:to-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-600">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5">
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl ${colors.light} flex items-center justify-center`}>
+                        <BookOpen className={`w-5 h-5 sm:w-6 sm:h-6 ${colors.textColor}`} />
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">查询参数</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100">查询参数</h3>
                     </div>
                     
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
+                    <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6">
+                      <table className="w-full min-w-[640px]">
                         <thead>
                           <tr className="bg-slate-100 dark:bg-slate-700/50">
-                            <th className="text-left py-4 px-5 font-semibold text-slate-600 dark:text-slate-400 text-base">参数名</th>
-                            <th className="text-left py-4 px-5 font-semibold text-slate-600 dark:text-slate-400 text-base">类型</th>
-                            <th className="text-left py-4 px-5 font-semibold text-slate-600 dark:text-slate-400 text-base">必填</th>
-                            <th className="text-left py-4 px-5 font-semibold text-slate-600 dark:text-slate-400 text-base">说明</th>
+                            <th className="text-left py-3 sm:py-4 px-4 sm:px-5 font-semibold text-slate-600 dark:text-slate-400 text-sm-dynamic">参数名</th>
+                            <th className="text-left py-3 sm:py-4 px-4 sm:px-5 font-semibold text-slate-600 dark:text-slate-400 text-sm-dynamic">类型</th>
+                            <th className="text-left py-3 sm:py-4 px-4 sm:px-5 font-semibold text-slate-600 dark:text-slate-400 text-sm-dynamic">必填</th>
+                            <th className="text-left py-3 sm:py-4 px-4 sm:px-5 font-semibold text-slate-600 dark:text-slate-400 text-sm-dynamic">说明</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -806,18 +808,18 @@ export function ApiDetail() {
                                 <React.Fragment key={param.name}>
                                   {paramFields.map((field, index) => (
                                     <tr key={`${param.name}-${index}`} className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
-                                      <td className="py-4 px-5 font-mono text-base text-slate-800 dark:text-slate-200">{field.name}</td>
-                                      <td className="py-4 px-5">
-                                        <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400">{field.type}</span>
+                                      <td className="py-3 sm:py-4 px-4 sm:px-5 font-mono text-sm-dynamic text-slate-800 dark:text-slate-200">{field.name}</td>
+                                      <td className="py-3 sm:py-4 px-4 sm:px-5">
+                                        <span className="inline-flex items-center px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg text-xs-dynamic sm:text-sm font-medium bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400">{field.type}</span>
                                       </td>
-                                      <td className="py-4 px-5">
+                                      <td className="py-3 sm:py-4 px-4 sm:px-5">
                                         {field.required ? (
-                                          <span className={`inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium ${colors.badgeLight}`}>是</span>
+                                          <span className={`inline-flex items-center px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg text-xs-dynamic sm:text-sm font-medium ${colors.badgeLight}`}>是</span>
                                         ) : (
-                                          <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-slate-100 dark:bg-slate-600 text-slate-600 dark:text-slate-400">否</span>
+                                          <span className="inline-flex items-center px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg text-xs-dynamic sm:text-sm font-medium bg-slate-100 dark:bg-slate-600 text-slate-600 dark:text-slate-400">否</span>
                                         )}
                                       </td>
-                                      <td className="py-4 px-5 text-base text-slate-600 dark:text-slate-400">{field.description || '-'}</td>
+                                      <td className="py-3 sm:py-4 px-4 sm:px-5 text-sm-dynamic text-slate-600 dark:text-slate-400">{field.description || '-'}</td>
                                     </tr>
                                   ))}
                                 </React.Fragment>
@@ -848,22 +850,22 @@ export function ApiDetail() {
                 )}
 
                 {hasRequestBody && (
-                  <div className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-700/50 dark:to-slate-800 rounded-2xl border border-slate-200 dark:border-slate-600 overflow-hidden">
-                    <div className="flex items-center justify-between cursor-pointer p-6" onClick={() => toggleSection('requestBody')}>
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
-                          <FileJson className="w-6 h-6 text-violet-600 dark:text-violet-400" />
+                  <div className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-700/50 dark:to-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-600 overflow-hidden">
+                    <div className="flex items-center justify-between cursor-pointer p-4 sm:p-6" onClick={() => toggleSection('requestBody')}>
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
+                          <FileJson className="w-5 h-5 sm:w-6 sm:h-6 text-violet-600 dark:text-violet-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">请求体参数</h3>
+                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100">请求体参数</h3>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <span className="text-xs-dynamic sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
                           {expandedSections.has('requestBody') ? '收起' : '展开'}
                         </span>
                         {expandedSections.has('requestBody') ? (
-                          <ChevronDown className="w-5 h-5 text-slate-400" />
+                          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                         ) : (
-                          <ChevronRight className="w-5 h-5 text-slate-400" />
+                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                         )}
                       </div>
                     </div>
@@ -873,24 +875,26 @@ export function ApiDetail() {
                         expandedSections.has('requestBody') ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="px-6 pb-6">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                         <SchemaTable fields={requestFields} />
                         
-                        <div className="mt-6">
-                          <h4 className="text-base font-semibold text-slate-700 dark:text-slate-300 mb-4">JSON 示例</h4>
-                          <div className="bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-600">
-                            <div className="flex items-center px-5 py-4 bg-white dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
-                              <span className="text-base text-slate-500 dark:text-slate-400 font-medium">JSON</span>
+                        <div className="mt-4 sm:mt-6">
+                          <h4 className="text-sm-dynamic sm:text-base font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4">JSON 示例</h4>
+                          <div className="bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-600">
+                            <div className="flex items-center px-4 sm:px-5 py-3 sm:py-4 bg-white dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
+                              <span className="text-sm-dynamic text-slate-500 dark:text-slate-400 font-medium">JSON</span>
                             </div>
-                            <div className="overflow-x-auto">
-                              <SyntaxHighlighter
-                                language="json"
-                                style={isDarkTheme ? oneDark : oneLight}
-                                customStyle={{ margin: 0, padding: '20px', borderRadius: 0, fontSize: '14px' }}
-                                showLineNumbers={false}
-                              >
-                                {formatJson(requestExample)}
-                              </SyntaxHighlighter>
+                            <div className="overflow-x-auto -mx-4 sm:-mx-5">
+                              <div className="px-4 sm:px-5">
+                                <SyntaxHighlighter
+                                  language="json"
+                                  style={isDarkTheme ? oneDark : oneLight}
+                                  customStyle={{ margin: 0, padding: '16px 0', borderRadius: 0, fontSize: '13px' }}
+                                  showLineNumbers={false}
+                                >
+                                  {formatJson(requestExample)}
+                                </SyntaxHighlighter>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -902,7 +906,7 @@ export function ApiDetail() {
             )}
 
             {activeTab === 'response' && (
-              <div className="space-y-4 mt-2">
+              <div className="space-y-3 sm:space-y-4 mt-2">
                 {responses.map((resp) => {
                   const responseSchema = resp.schema;
                   const responseFields = parseSchemaFields(responseSchema, '', components);
@@ -923,22 +927,22 @@ export function ApiDetail() {
                     : 'text-blue-600 dark:text-blue-400';
                   
                   return (
-                    <div key={resp.status} className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-700/50 dark:to-slate-800 rounded-xl border border-slate-200 dark:border-slate-600 overflow-hidden">
-                      <div className="flex items-center justify-between p-5">
-                        <div className="flex items-center gap-3">
-                          <span className={`px-4 py-2 rounded-lg text-sm font-bold ${statusColor} shadow-sm`}>
+                    <div key={resp.status} className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-700/50 dark:to-slate-800 rounded-lg sm:rounded-xl border border-slate-200 dark:border-slate-600 overflow-hidden">
+                      <div className="flex items-center justify-between p-4 sm:p-5">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <span className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-md sm:rounded-lg text-xs sm:text-sm font-bold ${statusColor} shadow-sm`}>
                             {resp.status}
                           </span>
-                          <span className={`text-lg font-semibold ${statusTextColor}`}>{resp.description}</span>
+                          <span className={`text-base sm:text-lg font-semibold ${statusTextColor}`}>{resp.description}</span>
                         </div>
                         <div className="flex items-center gap-2 cursor-pointer" onClick={() => toggleSection(`response-${resp.status}`)}>
                           <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                             {expandedSections.has(`response-${resp.status}`) ? '收起' : '展开'}
                           </span>
                           {expandedSections.has(`response-${resp.status}`) ? (
-                            <ChevronDown className="w-5 h-5 text-slate-400" />
+                            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                           ) : (
-                            <ChevronRight className="w-5 h-5 text-slate-400" />
+                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                           )}
                         </div>
                       </div>
@@ -948,15 +952,15 @@ export function ApiDetail() {
                           expandedSections.has(`response-${resp.status}`) ? 'max-h-none opacity-100' : 'max-h-0 opacity-0'
                         }`}
                       >
-                        <div className="px-5 pb-5">
+                        <div className="px-4 sm:px-5 pb-4 sm:pb-5">
                           <SchemaTable fields={responseFields} title="响应字段" />
                           
                           {resp.example !== undefined && (
-                            <div className="mt-5">
-                              <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">响应示例</h4>
-                              <div className="bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-600">
-                                <div className="flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
-                                  <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">JSON</span>
+                            <div className="mt-4 sm:mt-5">
+                              <h4 className="text-xs-dynamic sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">响应示例</h4>
+                              <div className="bg-slate-100 dark:bg-slate-800 rounded-lg sm:rounded-xl overflow-hidden border border-slate-200 dark:border-slate-600">
+                                <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-white dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
+                                  <span className="text-xs-dynamic sm:text-sm text-slate-500 dark:text-slate-400 font-medium">JSON</span>
                                   <button
                                     onClick={() => copyToClipboard(formatJson(resp.example))}
                                     className={`text-sm ${colors.textColor} hover:opacity-80 font-medium flex items-center gap-1`}
@@ -1324,19 +1328,18 @@ export function ApiDetail() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-600">
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="text"
-                        icon={<RefreshCw className="w-4 h-4" />}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-slate-600">
+                    <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start">
+                      <button
                         onClick={() => {
                           setRequestBody('');
                           setRequestHeaders(DEFAULT_HEADERS);
                         }}
-                        className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg font-medium"
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs-dynamic sm:text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-md sm:rounded-lg transition-all duration-200"
                       >
+                        <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         重置
-                      </Button>
+                      </button>
                       {hasRequestBody && (
                         <>
                           <button
@@ -1356,9 +1359,9 @@ export function ApiDetail() {
                                 message.error('JSON 格式错误');
                               }
                             }}
-                            className="flex items-center gap-1.5 px-3 py-2 text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
+                            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs-dynamic sm:text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-md sm:rounded-lg transition-all duration-200"
                           >
-                            <AlignLeft className="w-4 h-4" />
+                            <AlignLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             格式化
                           </button>
                           <button
@@ -1378,9 +1381,9 @@ export function ApiDetail() {
                                 message.error('JSON 格式错误');
                               }
                             }}
-                            className="flex items-center gap-1.5 px-3 py-2 text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
+                            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs-dynamic sm:text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-md sm:rounded-lg transition-all duration-200"
                           >
-                            <Minimize2 className="w-4 h-4" />
+                            <Minimize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             压缩
                           </button>
                           <button
@@ -1400,27 +1403,27 @@ export function ApiDetail() {
                                 message.error('JSON 格式无效');
                               }
                             }}
-                            className="flex items-center gap-1.5 px-3 py-2 text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
+                            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs-dynamic sm:text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-md sm:rounded-lg transition-all duration-200"
                           >
-                            <CheckCircle className="w-4 h-4" />
+                            <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             校验
                           </button>
                         </>
                       )}
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
                       <Button
                         type="text"
-                        icon={<Code className="w-4 h-4" />}
+                        icon={<Code className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                         onClick={handleGenerateCode}
-                        className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg font-medium"
+                        className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-md sm:rounded-lg font-medium px-3 text-xs-dynamic sm:text-sm-dynamic"
                       >
                         生成代码
                       </Button>
                       <button
                         onClick={handleSendRequest}
                         disabled={isLoading}
-                        className={`relative px-8 py-3.5 text-white font-bold text-base-dynamic rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center justify-center gap-2 overflow-hidden
+                        className={`flex-1 sm:flex-none relative px-5 sm:px-8 py-3 sm:py-3.5 text-white font-bold text-sm-dynamic sm:text-base-dynamic rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center justify-center gap-2 overflow-hidden min-w-[140px]
                           ${selectedEndpoint.method === 'GET' ? 'bg-emerald-500 hover:bg-emerald-600 shadow-[0_4px_20px_rgba(16,185,129,0.4)] hover:shadow-[0_6px_28px_rgba(16,185,129,0.5)]' : ''}
                           ${selectedEndpoint.method === 'POST' ? 'bg-blue-500 hover:bg-blue-600 shadow-[0_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_28px_rgba(59,130,246,0.5)]' : ''}
                           ${selectedEndpoint.method === 'PUT' ? 'bg-orange-500 hover:bg-orange-600 shadow-[0_4px_20px_rgba(249,115,22,0.4)] hover:shadow-[0_6px_28px_rgba(249,115,22,0.5)]' : ''}
@@ -1430,7 +1433,7 @@ export function ApiDetail() {
                         `}
                       >
                         <span className="relative z-10 flex items-center gap-2">
-                          <Send className="w-5 h-5" />
+                          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                           {isLoading ? '发送中...' : '发送请求'}
                         </span>
                         <span className="absolute inset-0 bg-white/20 translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />

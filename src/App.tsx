@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ConfigProvider, theme } from 'antd';
 import { Layout } from '@/components/Layout';
 import { useApiStore } from '@/store/api';
 import { useSettingsStore } from '@/store/settings';
 import { parseOpenApiDocument } from '@/services/apiParser';
-import { getOpenApiConfig, getBasePath } from '@/config';
+import { config } from '@/config';
 import { mockDocuments } from '@/data/mockApi';
 import type { OpenApiConfigItem } from '@/config';
 
@@ -30,7 +30,7 @@ function AppContent() {
     const loadDocuments = async () => {
       setLoading(true);
       try {
-        const openApiConfig = getOpenApiConfig();
+        const { openApiConfig } = config;
         
         if (openApiConfig && openApiConfig.length > 0) {
           const documents = await Promise.all(
@@ -149,10 +149,8 @@ function AppContent() {
 }
 
 function App() {
-  const basePath = getBasePath();
-  
   return (
-    <Router basename={basePath}>
+    <Router>
       <Routes>
         <Route path="/" element={<AppContent />} />
         <Route path="/api-docs/*" element={<AppContent />} />
