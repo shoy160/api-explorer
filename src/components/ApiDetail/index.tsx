@@ -1253,36 +1253,19 @@ export function ApiDetail() {
                   )}
 
                   {testActiveTab === 'body' && hasRequestBody && (
-                    <div className="rounded-2xl overflow-hidden mt-4 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50">
-                      <div className="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-700/80 dark:to-slate-800/80 border-b border-slate-200 dark:border-slate-600">
+                    <div className="rounded-xl overflow-hidden mt-4 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+                      <div className="flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600">
                         <div className="flex items-center gap-3">
-                          <div className={`w-3 h-3 rounded-full ${
-                            isJsonValid === true ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 
-                            isJsonValid === false ? 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]' : 
-                            'bg-slate-400'
-                          }`} />
-                          <span className="text-sm-dynamic font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                          <span className="text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
                             <FileJson className="w-4 h-4" />
                             Body (JSON)
                           </span>
-                          <span className={`inline-flex items-center text-xs-dynamic px-3 py-1.5 rounded-full font-medium transition-all duration-300 ${
-                            isJsonValid === true ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 shadow-sm shadow-emerald-200/50' : 
-                            isJsonValid === false ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 shadow-sm shadow-rose-200/50' : 
-                            'bg-slate-100 dark:bg-slate-600/50 text-slate-500'
+                          <span className={`inline-flex items-center text-xs-dynamic px-2.5 py-1 rounded-full font-medium ${
+                            isJsonValid === true ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' : 
+                            isJsonValid === false ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400' : 
+                            'bg-slate-100 dark:bg-slate-600 text-slate-500'
                           }`}>
-                            {isJsonValid === true ? (
-                              <span className="flex items-center gap-1.5">
-                                <Check className="w-3.5 h-3.5" />
-                                有效
-                              </span>
-                            ) : isJsonValid === false ? (
-                              <span className="flex items-center gap-1.5">
-                                <XCircle className="w-3.5 h-3.5" />
-                                无效
-                              </span>
-                            ) : (
-                              '未校验'
-                            )}
+                            {isJsonValid === true ? '✓ 有效' : isJsonValid === false ? '✗ 无效' : '未校验'}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -1303,7 +1286,7 @@ export function ApiDetail() {
                                 message.error('JSON 格式错误');
                               }
                             }}
-                            className="flex items-center gap-1.5 px-4 py-2 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-md transition-all duration-250"
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
                           >
                             <AlignLeft className="w-4 h-4" />
                             格式化
@@ -1325,7 +1308,7 @@ export function ApiDetail() {
                                 message.error('JSON 格式错误');
                               }
                             }}
-                            className="flex items-center gap-1.5 px-4 py-2 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-md transition-all duration-250"
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
                           >
                             <Minimize2 className="w-4 h-4" />
                             压缩
@@ -1347,7 +1330,7 @@ export function ApiDetail() {
                                 message.error('JSON 格式无效');
                               }
                             }}
-                            className="flex items-center gap-1.5 px-4 py-2 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-md transition-all duration-250"
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
                           >
                             <CheckCircle className="w-4 h-4" />
                             校验
@@ -1360,31 +1343,28 @@ export function ApiDetail() {
                               message.success('示例已填充');
                               setTimeout(() => setFillExampleClicked(false), 2000);
                             }}
-                            className={`flex items-center gap-1.5 px-4 py-2 text-sm-dynamic font-semibold rounded-xl transition-all duration-250 ${
+                            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium transition-all duration-200 rounded-lg ${
                               fillExampleClicked 
-                                ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' 
-                                : `${colors.badge} hover:opacity-90 shadow-md`
+                                ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' 
+                                : `${colors.badgeLight} hover:opacity-80`
                             }`}
                           >
                             {fillExampleClicked ? (
-                              <>
+                              <span className="flex items-center gap-1">
                                 <Check className="w-4 h-4" />
                                 已填充
-                              </>
+                              </span>
                             ) : (
-                              <>
-                                <FileText className="w-4 h-4" />
-                                填充示例
-                              </>
+                              '填充示例'
                             )}
                           </button>
                         </div>
                       </div>
-                      <div className="p-1 bg-slate-900 dark:bg-slate-950">
+                      <div className="p-4">
                         <CodeMirror
                           value={requestBody || formatJson(requestExample)}
                           height="auto"
-                          minHeight="300px"
+                          minHeight="280px"
                           maxHeight="600px"
                           theme={isDarkTheme ? 'dark' : 'light'}
                           extensions={[json()]}
@@ -1400,7 +1380,8 @@ export function ApiDetail() {
                           style={{
                             fontSize: '14px',
                             fontFamily: "'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
-                            borderRadius: '12px',
+                            borderRadius: '8px',
+                            border: '1px solid #e5e7eb',
                           }}
                           editable
                         />
