@@ -1268,97 +1268,32 @@ export function ApiDetail() {
                             {isJsonValid === true ? '✓ 有效' : isJsonValid === false ? '✗ 无效' : '未校验'}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => {
-                              const currentContent = requestBody || formatJson(requestExample);
-                              if (!currentContent.trim()) {
-                                message.warning('请先输入内容');
-                                return;
-                              }
-                              try {
-                                const parsed = JSON.parse(currentContent);
-                                const formatted = JSON.stringify(parsed, null, 2);
-                                setRequestBody(formatted);
-                                setIsJsonValid(true);
-                                message.success('已格式化');
-                              } catch {
-                                message.error('JSON 格式错误');
-                              }
-                            }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
-                          >
-                            <AlignLeft className="w-4 h-4" />
-                            格式化
-                          </button>
-                          <button
-                            onClick={() => {
-                              const currentContent = requestBody || formatJson(requestExample);
-                              if (!currentContent.trim()) {
-                                message.warning('请先输入内容');
-                                return;
-                              }
-                              try {
-                                const parsed = JSON.parse(currentContent);
-                                const compressed = JSON.stringify(parsed);
-                                setRequestBody(compressed);
-                                setIsJsonValid(true);
-                                message.success('已压缩');
-                              } catch {
-                                message.error('JSON 格式错误');
-                              }
-                            }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
-                          >
-                            <Minimize2 className="w-4 h-4" />
-                            压缩
-                          </button>
-                          <button
-                            onClick={() => {
-                              const currentContent = requestBody || formatJson(requestExample);
-                              if (!currentContent.trim()) {
-                                setIsJsonValid(null);
-                                message.info('请输入内容后再校验');
-                                return;
-                              }
-                              try {
-                                JSON.parse(currentContent);
-                                setIsJsonValid(true);
-                                message.success('JSON 格式有效');
-                              } catch {
-                                setIsJsonValid(false);
-                                message.error('JSON 格式无效');
-                              }
-                            }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
-                          >
-                            <CheckCircle className="w-4 h-4" />
-                            校验
-                          </button>
-                          <button
-                            onClick={() => {
-                              setRequestBody(formatJson(requestExample));
-                              setIsJsonValid(true);
-                              setFillExampleClicked(true);
-                              message.success('示例已填充');
-                              setTimeout(() => setFillExampleClicked(false), 2000);
-                            }}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm-dynamic font-medium transition-all duration-200 rounded-lg ${
-                              fillExampleClicked 
-                                ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' 
-                                : `${colors.badgeLight} hover:opacity-80`
-                            }`}
-                          >
-                            {fillExampleClicked ? (
-                              <span className="flex items-center gap-1">
-                                <Check className="w-4 h-4" />
-                                已填充
-                              </span>
-                            ) : (
-                              '填充示例'
-                            )}
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => {
+                            setRequestBody(formatJson(requestExample));
+                            setIsJsonValid(true);
+                            setFillExampleClicked(true);
+                            message.success('示例已填充');
+                            setTimeout(() => setFillExampleClicked(false), 2000);
+                          }}
+                          className={`flex items-center gap-1.5 px-4 py-2 text-sm-dynamic font-medium transition-all duration-200 rounded-lg ${
+                            fillExampleClicked 
+                              ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' 
+                              : `${colors.badgeLight} hover:opacity-80`
+                          }`}
+                        >
+                          {fillExampleClicked ? (
+                            <span className="flex items-center gap-1">
+                              <Check className="w-4 h-4" />
+                              已填充
+                            </span>
+                          ) : (
+                            <>
+                              <FileText className="w-4 h-4" />
+                              填充示例
+                            </>
+                          )}
+                        </button>
                       </div>
                       <div className="p-4">
                         <CodeMirror
@@ -1390,17 +1325,89 @@ export function ApiDetail() {
                   )}
 
                   <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-600">
-                    <Button
-                      type="text"
-                      icon={<RefreshCw className="w-4 h-4" />}
-                      onClick={() => {
-                        setRequestBody('');
-                        setRequestHeaders(DEFAULT_HEADERS);
-                      }}
-                      className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg font-medium"
-                    >
-                      重置
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="text"
+                        icon={<RefreshCw className="w-4 h-4" />}
+                        onClick={() => {
+                          setRequestBody('');
+                          setRequestHeaders(DEFAULT_HEADERS);
+                        }}
+                        className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg font-medium"
+                      >
+                        重置
+                      </Button>
+                      {hasRequestBody && (
+                        <>
+                          <button
+                            onClick={() => {
+                              const currentContent = requestBody || formatJson(requestExample);
+                              if (!currentContent.trim()) {
+                                message.warning('请先输入内容');
+                                return;
+                              }
+                              try {
+                                const parsed = JSON.parse(currentContent);
+                                const formatted = JSON.stringify(parsed, null, 2);
+                                setRequestBody(formatted);
+                                setIsJsonValid(true);
+                                message.success('已格式化');
+                              } catch {
+                                message.error('JSON 格式错误');
+                              }
+                            }}
+                            className="flex items-center gap-1.5 px-3 py-2 text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
+                          >
+                            <AlignLeft className="w-4 h-4" />
+                            格式化
+                          </button>
+                          <button
+                            onClick={() => {
+                              const currentContent = requestBody || formatJson(requestExample);
+                              if (!currentContent.trim()) {
+                                message.warning('请先输入内容');
+                                return;
+                              }
+                              try {
+                                const parsed = JSON.parse(currentContent);
+                                const compressed = JSON.stringify(parsed);
+                                setRequestBody(compressed);
+                                setIsJsonValid(true);
+                                message.success('已压缩');
+                              } catch {
+                                message.error('JSON 格式错误');
+                              }
+                            }}
+                            className="flex items-center gap-1.5 px-3 py-2 text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
+                          >
+                            <Minimize2 className="w-4 h-4" />
+                            压缩
+                          </button>
+                          <button
+                            onClick={() => {
+                              const currentContent = requestBody || formatJson(requestExample);
+                              if (!currentContent.trim()) {
+                                setIsJsonValid(null);
+                                message.info('请输入内容后再校验');
+                                return;
+                              }
+                              try {
+                                JSON.parse(currentContent);
+                                setIsJsonValid(true);
+                                message.success('JSON 格式有效');
+                              } catch {
+                                setIsJsonValid(false);
+                                message.error('JSON 格式无效');
+                              }
+                            }}
+                            className="flex items-center gap-1.5 px-3 py-2 text-sm-dynamic font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg transition-all duration-200"
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                            校验
+                          </button>
+                        </>
+                      )}
+                    </div>
                     <div className="flex items-center gap-3">
                       <Button
                         type="text"
