@@ -51,6 +51,10 @@ pnpm preview
 项目支持通过 `.env` 文件配置：
 
 ```bash
+# 部署路径（重要！如果部署在子目录下需要配置）
+# 例如部署在 https://example.com/api-explorer/ 下，设置为 /api-explorer/
+VITE_BASE_PATH=/
+
 # OpenAPI 文档配置（支持多个）
 VITE_OPENAPI_CONFIG='[{"name": "认证端 API", "path": "/v3/api-docs/auth-api"}, {"name": "管理端 API", "path": "/v3/api-docs/manage-api"}]'
 
@@ -59,6 +63,23 @@ VITE_APP_TITLE=API Explorer
 
 # 应用描述/副标题
 VITE_APP_DESCRIPTION=API 文档中心
+
+# API 基础地址（开发环境代理使用）
+VITE_API_BASE_URL=http://localhost:8010
+```
+
+### 部署路径配置
+
+如果您的项目部署不在网站根目录，而是在子目录下（例如 `https://example.com/api-explorer/`），需要配置 `VITE_BASE_PATH`：
+
+```bash
+# 部署在 https://example.com/api-explorer/ 下
+VITE_BASE_PATH=/api-explorer/
+```
+
+配置后重新构建即可：
+```bash
+pnpm build
 ```
 
 ## 📁 项目结构

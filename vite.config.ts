@@ -17,6 +17,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  base: process.env.VITE_BASE_PATH || '/',
   define: {
     'import.meta.env.VITE_OPENAPI_CONFIG': JSON.stringify(process.env.VITE_OPENAPI_CONFIG || defaultOpenApiConfig),
     'import.meta.env.VITE_APP_TITLE': JSON.stringify(process.env.VITE_APP_TITLE || 'API Explorer'),
