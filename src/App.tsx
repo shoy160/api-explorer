@@ -5,7 +5,7 @@ import { Layout } from '@/components/Layout';
 import { useApiStore } from '@/store/api';
 import { useSettingsStore } from '@/store/settings';
 import { parseOpenApiDocument } from '@/services/apiParser';
-import { config } from '@/config';
+import { getOpenApiConfig, getBasePath } from '@/config';
 import { mockDocuments } from '@/data/mockApi';
 import type { OpenApiConfigItem } from '@/config';
 
@@ -30,7 +30,7 @@ function AppContent() {
     const loadDocuments = async () => {
       setLoading(true);
       try {
-        const { openApiConfig } = config;
+        const openApiConfig = getOpenApiConfig();
         
         if (openApiConfig && openApiConfig.length > 0) {
           const documents = await Promise.all(
@@ -149,7 +149,7 @@ function AppContent() {
 }
 
 function App() {
-  const basePath = import.meta.env.VITE_BASE_PATH || '/';
+  const basePath = getBasePath();
   
   return (
     <Router basename={basePath}>
