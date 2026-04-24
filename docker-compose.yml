@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  api-explorer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_OPENAPI_CONFIG=${VITE_OPENAPI_CONFIG:'[{"name": "认证端 API", "path": "http://localhost:8010/v3/api-docs/auth-api"}, {"name": "管理端 API", "path": "http://localhost:8010/v3/api-docs/manage-api"}]'}
+      - VITE_APP_TITLE=${VITE_APP_TITLE:-API Explorer}
+      - VITE_APP_DESCRIPTION=${VITE_APP_DESCRIPTION:-API 文档中心}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
