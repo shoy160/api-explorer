@@ -149,8 +149,10 @@ function AppContent() {
 }
 
 function App() {
+  const basePath = import.meta.env.VITE_BASE_PATH || '/';
+  
   return (
-    <Router>
+    <Router basename={basePath}>
       <Routes>
         <Route path="/" element={<AppContent />} />
         <Route path="/api-docs/*" element={<AppContent />} />
