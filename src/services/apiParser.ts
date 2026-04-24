@@ -2,7 +2,13 @@ import type { ParsedOpenApi, ApiEndpoint } from '@/types';
 import type { OpenAPIV3 } from 'openapi-types';
 
 export async function parseOpenApiDocument(url: string): Promise<ParsedOpenApi> {
-  const response = await fetch(url);
+  let fetchUrl = url;
+  
+  if (url.startsWith('/')) {
+    fetchUrl = `${window.location.origin}${url}`;
+  }
+  
+  const response = await fetch(fetchUrl);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
